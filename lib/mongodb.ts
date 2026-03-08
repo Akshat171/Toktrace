@@ -1,14 +1,16 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, MongoClientOptions } from 'mongodb';
+import dns from 'dns';
+
+dns.setDefaultResultOrder('ipv4first');
 
 if (!process.env.MONGODB_URI) {
   throw new Error('Please add your MongoDB URI to .env.local');
 }
 
 const uri = process.env.MONGODB_URI;
-const options = {
-  serverSelectionTimeoutMS: 5000,
-  connectTimeoutMS: 5000,
-  family: 4 as const,
+const options: MongoClientOptions = {
+  serverSelectionTimeoutMS: 10000,
+  connectTimeoutMS: 10000,
 };
 
 let client: MongoClient;
